@@ -1,5 +1,6 @@
 # pwr_key_driver
 my first arm driver power key driver 
-20200806
-linux-arm  lc1860芯片
+hello 简单的字符型驱动
+
+
 

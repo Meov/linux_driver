@@ -103,8 +103,8 @@ static int beep_probe(struct platform_device *pdev)
 	int ret;	
 	printk("match ok!");
 	
-	gpd0con = ioremap(pdev->resource[0].start,pdev->resource[0].end - pdev->resource[0].start);
-	timer_base = ioremap(pdev->resource[1].start, pdev->resource[1].end - pdev->resource[1].start);
+	//gpd0con = ioremap(pdev->resource[0].start,pdev->resource[0].end - pdev->resource[0].start);
+	//timer_base = ioremap(pdev->resource[1].start, pdev->resource[1].end - pdev->resource[1].start);
  
 	devno = MKDEV(major,minor);
 	ret = register_chrdev(major,"beep",&beep_ops);
@@ -124,14 +124,14 @@ static int beep_probe(struct platform_device *pdev)
 		return -EBUSY;
 	}
 	
-	fs4412_beep_init();
+	//fs4412_beep_init();
 	
 	return 0;
 }
  
 static int beep_remove(struct platform_device *pdev)
 {
-	beep_unmap();
+	//beep_unmap();
 	device_destroy(cls,devno);
 	class_destroy(cls);	
 	unregister_chrdev(major,"beep");
@@ -159,7 +159,6 @@ static void beep_exit(void)
 {
 	printk("beep_exit");
 	platform_driver_unregister(&beep_driver);
-	
 	return;
 }
  

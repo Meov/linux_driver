@@ -31,8 +31,8 @@ static struct platform_device hello_device=
     .name = "bigbang",
     .id = -1,
     .dev.release = hello_release,
-    .num_resources = ARRAY_SIZE(beep_resource),
-    .resource = beep_resource,
+    //.num_resources = ARRAY_SIZE(beep_resource),
+    //.resource = beep_resource,
 };
  
 static int hello_init(void)

@@ -87,7 +87,7 @@ static int comip_powerkey_probe(struct platform_device *pdev)
 
 	set_bit(KEY_POWER, powerkey_input->keybit);
 
-	error = input_register_device(powerkey_input);
+	error = input_register_device(powerkey_input);   //注册
 	if (error) {
 		printk(KERN_ERR "Unable to register power key input device!\n");
 		goto err_input;

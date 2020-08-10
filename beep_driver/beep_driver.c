@@ -5,7 +5,7 @@
 #include <linux/platform_device.h>
 #include <asm/io.h>
  
-static int major = 250;
+static int major = 0;
 static int minor=0;
 static dev_t devno;
 static struct class *cls;

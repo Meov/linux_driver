@@ -1,0 +1,1 @@
+cmd_/mnt/hgfs/Share/work/linux-drv/beep_driver/beep_driver.ko := ld -r -m elf_x86_64 -T /usr/src/kernels/3.10.0-327.el7.x86_64/scripts/module-common.lds --build-id  -o /mnt/hgfs/Share/work/linux-drv/beep_driver/beep_driver.ko /mnt/hgfs/Share/work/linux-drv/beep_driver/beep_driver.o /mnt/hgfs/Share/work/linux-drv/beep_driver/beep_driver.mod.o

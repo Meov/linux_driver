@@ -7,10 +7,10 @@ main()
 {
 	int fd,i,lednum;
  
-	fd = open("/dev/beep",O_RDWR);
+	fd = open("/dev/beep_driver",O_RDWR);
 	if(fd<0)
 	{
-		perror("open fail \n");
+		perror("open /dev/beep_driver fail \n");
 		return ;
 	}
 	

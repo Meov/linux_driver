@@ -18,36 +18,34 @@ static struct resource beep_resource[] =
 	}
 };
  
-static void hello_release(struct device *dev)
+static void beep_device_release(struct device *dev)
 {
-	printk("hello_release\n");
+	printk("beep device release\n");
 	return ;
 }
  
- 
- 
 static struct platform_device hello_device=
 {
-    .name = "bigbang",
+    .name = "beep",
     .id = -1,
-    .dev.release = hello_release,
+    .dev.release = beep_device_release,
     //.num_resources = ARRAY_SIZE(beep_resource),
     //.resource = beep_resource,
 };
  
-static int hello_init(void)
+static int beep_init(void)
 {
-	printk("hello_init");
+	printk("======================>beep_device_init");
 	return platform_device_register(&hello_device);
 }
  
-static void hello_exit(void)
+static void beep_exit(void)
 {
-	printk("hello_exit");
+	printk("======================>beep_device_exit");
 	platform_device_unregister(&hello_device);
 	return;
 }
  
 MODULE_LICENSE("GPL");
-module_init(hello_init);
-module_exit(hello_exit);
+module_init(beep_init);
+module_exit(beep_exit);

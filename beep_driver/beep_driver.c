@@ -54,13 +54,15 @@ static void beep_unmap(void)
  
 static int beep_open (struct inode *inode, struct file *filep)
 {
-	fs4412_beep_on();
+	//fs4412_beep_on();
+	printk("beep open!");
 	return 0;
 }
  
 static int beep_release(struct inode *inode, struct file *filep)
 {
-	 fs4412_beep_off();
+	 //fs4412_beep_off();
+	 printk("beep off!");
 	 return 0;
 }
  
@@ -95,30 +97,34 @@ static struct file_operations beep_ops=
 {
 	.open     = beep_open,
 	.release = beep_release,
-	.unlocked_ioctl      = beep_ioctl,
+	//.unlocked_ioctl      = beep_ioctl,
 };
  
 static int beep_probe(struct platform_device *pdev)
 {
 	int ret;	
-	printk("match ok!");
+	printk("=========================>match ok!");
 	
 	//gpd0con = ioremap(pdev->resource[0].start,pdev->resource[0].end - pdev->resource[0].start);
 	//timer_base = ioremap(pdev->resource[1].start, pdev->resource[1].end - pdev->resource[1].start);
  
+
+	ret = register_chrdev(major,"beep_driver",&beep_ops);
+ 	major = ret;
 	devno = MKDEV(major,minor);
-	ret = register_chrdev(major,"beep",&beep_ops);
- 
-	cls = class_create(THIS_MODULE, "myclass");
+	printk("---------------------------------------major:%d\n",major);
+	
+	cls = class_create(THIS_MODULE, "cls");
 	if(IS_ERR(cls))
 	{
-		unregister_chrdev(major,"beep");
+		unregister_chrdev(major,"beep_driver");
 		return -EBUSY;
 	}
  
-	test_device = device_create(cls,NULL,devno,NULL,"beep");//mknod /dev/hello
+	test_device = device_create(cls,NULL,devno,NULL,"beep_driver");//mknod /dev/hello
 	if(IS_ERR(test_device))
 	{
+		printk("=========================>device_create err");
 		class_destroy(cls);
 		unregister_chrdev(major,"beep");
 		return -EBUSY;
@@ -142,7 +148,7 @@ static int beep_remove(struct platform_device *pdev)
  
 static struct platform_driver beep_driver=
 {
-    .driver.name = "bigbang",
+    .driver.name ="beep",
     .probe = beep_probe,
     .remove = beep_remove,
 };
@@ -150,14 +156,13 @@ static struct platform_driver beep_driver=
  
 static int beep_init(void)
 {
-	printk("beep_init");
-	
-	return platform_driver_register(&beep_driver);
+	//printk("======================>beep_driver_init\n");
+	return platform_driver_register(&beep_driver); //调用此函数时就开始使用match功能 查找对应的设备
 }
  
 static void beep_exit(void)
 {
-	printk("beep_exit");
+	//printk("=======================>beep_driver_exit\n");
 	platform_driver_unregister(&beep_driver);
 	return;
 }

@@ -77,7 +77,7 @@ static int comip_powerkey_probe(struct platform_device *pdev)
 {
 	struct input_dev * powerkey_input;
 	int error = -1;
-
+	printk("===========================>comip-powerkey  match ok!");
 	powerkey_input = input_allocate_device();
 
 	set_bit(EV_KEY, powerkey_input->evbit);
@@ -93,7 +93,7 @@ static int comip_powerkey_probe(struct platform_device *pdev)
 		goto err_input;
 	}
 
-	platform_set_drvdata(pdev, powerkey_input);
+	platform_set_drvdata(pdev, powerkey_input); //powerkey_input 的值赋给pdev 将data指向的内存地址赋予了dev->p->driver_data
 	wake_lock_init(&pwrkey_wakelock, WAKE_LOCK_SUSPEND, "pwrkey_wake_lock");
 	error = pmic_callback_register(PMIC_EVENT_POWER_KEY, powerkey_input, comip_powerkey_event);
 	if (error) {
@@ -151,11 +151,13 @@ struct platform_driver comip_powerkey_driver = {
 
 static int __init comip_powerkey_init(void)
 {
+	printk("===========================>comip-powerkey  init!");
 	return platform_driver_register(&comip_powerkey_driver);
 }
 
 static void __exit comip_powerkey_exit(void)
 {
+	printk("===========================>comip-powerkey  exit");
 	platform_driver_unregister(&comip_powerkey_driver);
 }
 
